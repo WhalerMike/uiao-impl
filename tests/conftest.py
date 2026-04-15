@@ -49,3 +49,35 @@ def sample_canon_entry() -> dict:
         "description": "A test entry for unit testing.",
         "category": "testing",
     }
+
+
+# ---------------------------------------------------------------------------
+# Auto-skip canon-dependent modules when generation-inputs/ is not available.
+# Canon lives in uiao-core; generation-inputs/ was not migrated in the split
+# (tracked in issue #2). These modules re-activate automatically once canon
+# is restored in uiao-core.
+# ---------------------------------------------------------------------------
+from canon_paths import GENERATION_INPUTS_DIR as _GEN_INPUTS_DIR
+
+_CANON_DEPENDENT_MODULES = {
+    "test_diagrams",
+    "test_mover_logic",
+    "test_generators",
+    "test_models",
+    "test_overlay_loader",
+    "test_scuba_transformer_determinism",
+    "test_ssp_inject",
+}
+
+
+def pytest_collection_modifyitems(config, items):
+    """Skip tests depending on canon files not yet migrated to uiao-core."""
+    if _GEN_INPUTS_DIR.exists():
+        return
+    skip_marker = pytest.mark.skip(
+        reason="canon generation-inputs/ not migrated to uiao-core yet (issue #2)"
+    )
+    for item in items:
+        module_name = item.module.__name__.rsplit(".", 1)[-1]
+        if module_name in _CANON_DEPENDENT_MODULES:
+            item.add_marker(skip_marker)
