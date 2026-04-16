@@ -137,7 +137,7 @@ Every run produces a timestamped transcript log. Every mode emits deterministic,
 > > ### Scheduled Task (Windows Task Scheduler)
 > >
 > > ```powershell
-> > $Action  = New-ScheduledTaskAction -Execute "pwsh.exe" -Argument "-File C:\Users\whale\uiao-core\scripts\sync-uiao.ps1"
+> > $Action  = New-ScheduledTaskAction -Execute "pwsh.exe" -Argument "-File C:\Users\whale\src\uiao-core\scripts\sync-uiao.ps1"
 > > $Trigger = New-ScheduledTaskTrigger -Daily -At 6am
 > > Register-ScheduledTask -TaskName "UIAO-Core-DailySync" -Action $Action -Trigger $Trigger
 > > ```

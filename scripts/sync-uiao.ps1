@@ -57,7 +57,7 @@ param(
 # =======================================================
 $ErrorActionPreference = 'Stop'
 
-$RepoPath     = "C:\Users\whale\uiao-core"
+$RepoPath     = "C:\Users\whale\src\uiao-core"
 $RepoUrl      = "https://github.com/WhalerMike/uiao-core.git"
 $OriginBranch = "origin/main"
 $Branch       = "main"
